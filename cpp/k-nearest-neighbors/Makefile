@@ -12,12 +12,13 @@ DATAHANDLER_SRC = $(MNIST_ML_CPP_ROOT)/src/data_handler.cc
 all: euclidean
 
 euclidean: $(SRC)/knn.cc $(DATAHANDLER_SRC)
-	$(CC) $(CFLAGS) --define-macro=EUCLIDEAN $(SRC)/knn.cc $(DATAHANDLER_SRC) -o main -L$(LIB_DIR) \
+	$(CC) $(CFLAGS) --define-macro=EUCLIDEAN $(SRC)/knn.cc $(DATAHANDLER_SRC) -o euclidean -L$(LIB_DIR) \
 	-I$(INCLUDE_DIR) -I$(MNIST_ML_CPP_ROOT)/include/ -ldata
 
 manhattan: $(SRC)/knn.cc $(DATAHANDLER_SRC)
-	$(CC) $(CFLAGS) --define-macro=MANHATTAN $(SRC)/knn.cc $(DATAHANDLER_SRC) -o main -L$(LIB_DIR) \
+	$(CC) $(CFLAGS) --define-macro=MANHATTAN $(SRC)/knn.cc $(DATAHANDLER_SRC) -o manhattan -L$(LIB_DIR) \
 	-I$(INCLUDE_DIR) -I$(MNIST_ML_CPP_ROOT)/include/ -ldata
 
 clean:
-	rm -dfr main*
+	rm -dfr manhattan*
+	rm -dfr euclidean*
