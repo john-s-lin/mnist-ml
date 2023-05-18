@@ -59,6 +59,16 @@ void Data::set_enum_label(int enum_label)
 }
 
 /**
+ * @brief Set the distance object
+ *
+ * @param distance
+ */
+void Data::set_distance(double distance)
+{
+    this->distance = distance;
+}
+
+/**
  * @brief Get the feature vector size
  *
  * @return int

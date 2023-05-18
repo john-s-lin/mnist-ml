@@ -2,7 +2,7 @@ CC=clang++
 MNIST_ML_CPP_ROOT := $(shell pwd)
 INCLUDE_DIR := $(MNIST_ML_CPP_ROOT)/include
 SRC := $(MNIST_ML_CPP_ROOT)/src
-CFLAGS := -std=c++17 -Wall -Wextra -pedantic -g
+CFLAGS := -shared -std=c++17 -Wall -Wextra -pedantic -g
 LIB_DATA := libdata.so
 
 all: $(LIB_DATA)

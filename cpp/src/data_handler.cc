@@ -227,11 +227,11 @@ std::vector<Data *> *DataHandler::get_validation_data()
     return validation_data;
 }
 
-int main()
-{
-    DataHandler *data_handler = new DataHandler();
-    data_handler->read_feature_vector("../data/train-images-idx3-ubyte");
-    data_handler->read_feature_labels("../data/train-labels-idx1-ubyte");
-    data_handler->split_data();
-    data_handler->count_classes();
-}
+// int main()
+// {
+//     DataHandler *data_handler = new DataHandler();
+//     data_handler->read_feature_vector("../data/train-images-idx3-ubyte");
+//     data_handler->read_feature_labels("../data/train-labels-idx1-ubyte");
+//     data_handler->split_data();
+//     data_handler->count_classes();
+// }
