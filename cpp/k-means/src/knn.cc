@@ -63,6 +63,21 @@ void KNN::find_knearest(Data *query_point)
     }
 }
 
+void KNN::set_training_data(std::vector<Data *> *training_data)
+{
+    this->training_data = training_data;
+}
+
+void KNN::set_test_data(std::vector<Data *> *test_data)
+{
+    this->test_data = test_data;
+}
+
+void KNN::set_validation_data(std::vector<Data *> *validation_data)
+{
+    this->validation_data = validation_data;
+}
+
 void KNN::set_k(int k)
 {
     this->k = k;

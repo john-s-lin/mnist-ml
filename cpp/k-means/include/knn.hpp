@@ -1,9 +1,10 @@
 #ifndef KNN_H
 #define KNN_H
 
-#include "common.hpp"
+#include <vector>
+#include "data.hpp"
 
-class KNN : public CommonData
+class KNN
 {
     int k;
     std::vector<Data *> *neighbours;
