@@ -46,6 +46,7 @@ typedef struct Cluster
         {
             class_count[point->get_label()]++;
         }
+        set_most_common_class();
     }
 
     void set_most_common_class()
@@ -67,11 +68,19 @@ typedef struct Cluster
 class KMeans : public CommonData
 {
     int k;
-    std::vector<Data *> *centroids;
-    std::vector<Data *> *prev_centroids;
-    std::vector<Data *> *cluster;
-    std::vector<Data *> *prev_cluster;
-    std::vector<Data *> *neighbours;
+    std::vector<cluster_t *> *clusters;
+    std::unordered_set<int> *used_points;
+
+public:
+    KMeans(int k);
+    ~KMeans();
+
+    void init_clusters();
+    void init_clusters_for_class();
+    void train();
+    double euclidean_distance(std::vector<double> *centroid, Data *point);
+    double validate();
+    double test();
 };
 
 #endif // K_MEANS_H
