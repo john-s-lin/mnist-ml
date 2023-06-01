@@ -32,6 +32,7 @@ public:
     void read_feature_labels(std::string path);
     void split_data();
     void count_classes();
+    int get_num_classes();
 
     uint32_t convert_to_little_endian(const unsigned char *bytes);
 

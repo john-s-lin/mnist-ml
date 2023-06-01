@@ -187,6 +187,16 @@ void DataHandler::count_classes()
 }
 
 /**
+ * @brief Get the number of classes
+ *
+ * @return int
+ */
+int DataHandler::get_num_classes()
+{
+    return num_classes;
+}
+
+/**
  * @brief Convert the bytes to little endian
  *
  * @param bytes
