@@ -39,6 +39,47 @@ void Data::append_feature_vector(uint8_t feature)
 }
 
 /**
+ * @brief Set the feature vector object
+ *
+ * @param double_feature_vector
+ */
+void Data::set_feature_vector(std::vector<double> *double_feature_vector)
+{
+    this->double_feature_vector = double_feature_vector;
+}
+
+/**
+ * @brief Append to the double feature vector object
+ *
+ * @param feature
+ */
+void Data::append_feature_vector(double feature)
+{
+    this->double_feature_vector->push_back(feature);
+}
+
+/**
+ * @brief Set the class vector object
+ *
+ * @param count
+ */
+void Data::set_class_vector(int count)
+{
+    this->class_vector = new std::vector<int>();
+    for (int i = 0; i < count; i++)
+    {
+        if (i == label)
+        {
+            this->class_vector->push_back(1);
+        }
+        else
+        {
+            this->class_vector->push_back(0);
+        }
+    }
+}
+
+/**
  * @brief Set the label object
  *
  * @param label
@@ -106,4 +147,24 @@ uint8_t Data::get_enum_label()
 std::vector<uint8_t> *Data::get_feature_vector()
 {
     return this->feature_vector;
+}
+
+/**
+ * @brief Get the double feature vector
+ *
+ * @return std::vector<double>*
+ */
+std::vector<double> *Data::get_double_feature_vector()
+{
+    return this->double_feature_vector;
+}
+
+/**
+ * @brief Get the class vector
+ *
+ * @return std::vector<int>*
+ */
+std::vector<int> *Data::get_class_vector()
+{
+    return this->class_vector;
 }
