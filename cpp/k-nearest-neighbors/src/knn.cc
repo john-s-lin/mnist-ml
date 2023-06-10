@@ -5,21 +5,39 @@
 #include "../include/knn.hpp"
 #include "stdint.h"
 
+/**
+ * @brief Construct a new KNN::KNN object
+ *
+ * @param k
+ */
 KNN::KNN(int k)
 {
     this->k = k;
 }
 
+/**
+ * @brief Construct a new KNN::KNN object
+ *
+ */
 KNN::KNN()
 {
     this->k = 1;
 }
 
+/**
+ * @brief Destroy the KNN::KNN object
+ *
+ */
 KNN::~KNN()
 {
     delete neighbours;
 }
 
+/**
+ * @brief Find the k nearest neighbours
+ *
+ * @param query_point
+ */
 void KNN::find_knearest(Data *query_point)
 {
     neighbours = new std::vector<Data *>();
@@ -63,11 +81,21 @@ void KNN::find_knearest(Data *query_point)
     }
 }
 
+/**
+ * @brief Set k
+ *
+ * @param k
+ */
 void KNN::set_k(int k)
 {
     this->k = k;
 }
 
+/**
+ * @brief Predict the class of the query point
+ *
+ * @return int
+ */
 int KNN::predict()
 {
     std::map<uint8_t, int> class_count;
@@ -96,6 +124,13 @@ int KNN::predict()
     return best;
 }
 
+/**
+ * @brief Calculate the distance between two data points
+ *
+ * @param query_point
+ * @param input
+ * @return double
+ */
 double KNN::calculate_distance(Data *query_point, Data *input)
 {
     double distance = 0.0;
@@ -119,6 +154,11 @@ double KNN::calculate_distance(Data *query_point, Data *input)
     return distance;
 }
 
+/**
+ * @brief Evaluate the performance of the model on the validation set
+ *
+ * @return double
+ */
 double KNN::validate_performance()
 {
     double current_performance = 0;
@@ -142,6 +182,11 @@ double KNN::validate_performance()
     return current_performance;
 }
 
+/**
+ * @brief Evaluate the performance of the model on the test set
+ *
+ * @return double
+ */
 double KNN::test_performance()
 {
     double current_performance = 0;

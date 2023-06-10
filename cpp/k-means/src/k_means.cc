@@ -1,5 +1,10 @@
 #include "../include/k_means.hpp"
 
+/**
+ * @brief Construct a new KMeans::KMeans object
+ *
+ * @param k
+ */
 KMeans::KMeans(int k) : CommonData()
 {
     this->k = k;
@@ -7,6 +12,10 @@ KMeans::KMeans(int k) : CommonData()
     used_points = new std::unordered_set<int>();
 }
 
+/**
+ * @brief Destroy the KMeans::KMeans object
+ *
+ */
 KMeans::~KMeans()
 {
     for (auto cluster : *clusters)
@@ -17,6 +26,10 @@ KMeans::~KMeans()
     delete used_points;
 }
 
+/**
+ * @brief Initialize the clusters
+ *
+ */
 void KMeans::init_clusters()
 {
     for (int i = 0; i < k; i++)
@@ -31,6 +44,9 @@ void KMeans::init_clusters()
     }
 }
 
+/**
+ * @brief Initialize the clusters for each class
+ */
 void KMeans::init_clusters_for_class()
 {
     std::unordered_set<int> used_centroids;
@@ -45,6 +61,10 @@ void KMeans::init_clusters_for_class()
     }
 }
 
+/**
+ * @brief Train the model
+ *
+ */
 void KMeans::train()
 {
     while (used_points->size() < training_data->size())
@@ -71,6 +91,13 @@ void KMeans::train()
     }
 }
 
+/**
+ * @brief Calculate the euclidean distance between a centroid and a point
+ *
+ * @param centroid
+ * @param point
+ * @return double
+ */
 double KMeans::euclidean_distance(std::vector<double> *centroid, Data *point)
 {
     double distance = 0;
@@ -82,6 +109,11 @@ double KMeans::euclidean_distance(std::vector<double> *centroid, Data *point)
     return distance;
 }
 
+/**
+ * @brief Validate the model
+ *
+ * @return double
+ */
 double KMeans::validate()
 {
     double correct = 0;
@@ -107,6 +139,11 @@ double KMeans::validate()
     return (correct / validation_data->size()) * 100;
 }
 
+/**
+ * @brief Test the model
+ *
+ * @return double
+ */
 double KMeans::test()
 {
     double correct = 0;
