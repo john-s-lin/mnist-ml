@@ -25,6 +25,53 @@ DataHandler::~DataHandler()
 }
 
 /**
+ * @brief Read the csv file
+ *
+ * @param path The path to the csv file
+ * @param delimiter Delimiter used in the csv file
+ */
+void DataHandler::read_csv(std::string path, std::string delimiter)
+{
+    num_classes = 0;
+    std::ifstream data_file;
+    data_file.open(path.c_str());
+    std::string line;
+
+    while (std::getline(data_file, line))
+    {
+        if (line.length() == 0)
+            continue;
+        Data *data = new Data();
+        data->set_normalized_feature_vector(new std::vector<double>());
+        size_t pos = 0;
+        std::string token;
+        while ((pos = line.find(delimiter)) != std::string::npos)
+        {
+            token = line.substr(0, pos);
+            data->append_feature_vector(std::stod(token));
+            line.erase(0, pos + delimiter.length());
+        }
+
+        if (class_from_string.find(line) == class_from_string.end())
+        {
+            data->set_label(class_from_string[line]);
+        }
+        else
+        {
+            class_from_string[line] = num_classes;
+            data->set_label(class_from_string[token]);
+            num_classes++;
+        }
+        data_array->push_back(data);
+    }
+    for (Data *data : *data_array)
+    {
+        data->set_class_vector(num_classes);
+    }
+    feature_vector_size = data_array->at(0)->get_normalized_feature_vector()->size();
+}
+
+/**
  * @brief Read the feature vector from the file
  *
  * @param path

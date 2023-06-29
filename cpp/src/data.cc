@@ -45,7 +45,7 @@ void Data::append_feature_vector(uint8_t feature)
  */
 void Data::set_normalized_feature_vector(std::vector<double> *double_feature_vector)
 {
-    this->double_feature_vector = double_feature_vector;
+    this->normalized_feature_vector = double_feature_vector;
 }
 
 /**
@@ -55,7 +55,7 @@ void Data::set_normalized_feature_vector(std::vector<double> *double_feature_vec
  */
 void Data::append_feature_vector(double feature)
 {
-    this->double_feature_vector->push_back(feature);
+    this->normalized_feature_vector->push_back(feature);
 }
 
 /**
@@ -154,9 +154,9 @@ std::vector<uint8_t> *Data::get_feature_vector()
  *
  * @return std::vector<double>*
  */
-std::vector<double> *Data::get_double_feature_vector()
+std::vector<double> *Data::get_normalized_feature_vector()
 {
-    return this->double_feature_vector;
+    return this->normalized_feature_vector;
 }
 
 /**
