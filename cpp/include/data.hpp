@@ -18,9 +18,9 @@ public:
     Data();
     ~Data();
     void set_feature_vector(std::vector<uint8_t> *feature_vector);
-    void append_feature_vector(uint8_t feature);
+    void set_normalized_feature_vector(std::vector<double> *double_feature_vector);
 
-    void set_feature_vector(std::vector<double> *double_feature_vector);
+    void append_feature_vector(uint8_t feature);
     void append_feature_vector(double feature);
     void set_class_vector(int count);
     void set_label(uint8_t label);

@@ -197,6 +197,48 @@ int DataHandler::get_num_classes()
 }
 
 /**
+ * @brief Normalize the data
+ *
+ */
+void DataHandler::normalize()
+{
+    std::vector<double> mins, maxes;
+
+    Data *data = data_array->at(0);
+    for (auto val : *data->get_feature_vector())
+    {
+        mins.push_back(val);
+        maxes.push_back(val);
+    }
+
+    for (unsigned i = 1; i < data_array->size(); i++)
+    {
+        data = data_array->at(i);
+        for (unsigned j = 0; j < data->get_feature_vector_size(); j++)
+        {
+            double value = (double)data->get_feature_vector()->at(j);
+            if (value < mins.at(j))
+                mins[j] = value;
+            if (value > maxes.at(j))
+                maxes[j] = value;
+        }
+    }
+
+    for (unsigned i = 0; i < data_array->size(); i++)
+    {
+        data_array->at(i)->set_normalized_feature_vector(new std::vector<double>());
+        data_array->at(i)->set_class_vector(num_classes);
+        for (unsigned j = 0; j < data_array->at(i)->get_feature_vector_size(); j++)
+        {
+            if (maxes[j] - mins[j] == 0)
+                data_array->at(i)->append_feature_vector(0.0);
+            else
+                data_array->at(i)->append_feature_vector((data_array->at(i)->get_feature_vector()->at(j) - mins[j]) / (maxes[j] - mins[j]));
+        }
+    }
+}
+
+/**
  * @brief Convert the bytes to little endian
  *
  * @param bytes

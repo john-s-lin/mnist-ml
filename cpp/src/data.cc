@@ -43,7 +43,7 @@ void Data::append_feature_vector(uint8_t feature)
  *
  * @param double_feature_vector
  */
-void Data::set_feature_vector(std::vector<double> *double_feature_vector)
+void Data::set_normalized_feature_vector(std::vector<double> *double_feature_vector)
 {
     this->double_feature_vector = double_feature_vector;
 }

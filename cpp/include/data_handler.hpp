@@ -18,7 +18,10 @@ class DataHandler
     std::vector<Data *> *validation_data;
 
     int num_classes;
+    int feature_vector_size;
+
     std::map<uint8_t, int> class_labels;
+    std::map<std::string, int> class_from_string;
 
     const double TRAIN_SET_PERCENT = 0.75;
     const double TEST_SET_PERCENT = 0.20;
@@ -28,11 +31,13 @@ public:
     DataHandler();
     ~DataHandler();
 
+    void read_csv(std::string path, std::string delimiter);
     void read_feature_vector(std::string path);
     void read_feature_labels(std::string path);
     void split_data();
     void count_classes();
     int get_num_classes();
+    void normalize();
 
     uint32_t convert_to_little_endian(const unsigned char *bytes);
 
