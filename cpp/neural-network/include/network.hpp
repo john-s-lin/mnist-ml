@@ -9,14 +9,14 @@
 class Network : public CommonData
 {
 public:
-    std::vector<Layer *> *layers;
+    std::vector<Layer *> layers;
     double learning_rate;
     double test_accuracy;
-    Network(std::vector<int> *layer_sizes, int input_size, int output_size, double learning_rate);
+    Network(std::vector<int> layer_sizes, int input_size, int output_size, double learning_rate);
     ~Network();
 
     std::vector<double> feed_forward(Data *data);
-    double activation_function(std::vector<double> *inputs, std::vector<double> *weights);
+    double activation_function(std::vector<double> inputs, std::vector<double> weights);
     double transfer(double activation);
     double transfer_derivative(double output);
 
