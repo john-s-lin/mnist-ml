@@ -213,16 +213,17 @@ void Network::train(int epochs)
 double Network::test()
 {
     int correct = 0;
+    double count = 0;
     for (Data *data : *this->test_data)
     {
+        count++;
         int prediction = this->predict(data);
-        int actual = std::distance(data->get_class_vector()->begin(), std::max_element(data->get_class_vector()->begin(), data->get_class_vector()->end()));
-        if (prediction == actual)
+        if (data->get_class_vector()->at(prediction) == 1)
         {
             correct++;
         }
     }
-    return (double)correct / (double)this->test_data->size();
+    return (double)correct / count;
 }
 
 /**
@@ -232,27 +233,29 @@ double Network::test()
 void Network::validate()
 {
     int correct = 0;
+    double count = 0;
     for (Data *data : *this->validation_data)
     {
+        count++;
         int prediction = this->predict(data);
-        int actual = std::distance(data->get_class_vector()->begin(), std::max_element(data->get_class_vector()->begin(), data->get_class_vector()->end()));
-        if (prediction == actual)
+        if (data->get_class_vector()->at(prediction) == 1)
         {
             correct++;
         }
     }
-    printf("Validation accuracy: %.4f\n", (double)correct / (double)this->validation_data->size());
+    printf("Validation accuracy: %.4f\n", (double)correct / (double)count);
 }
 
 int main()
 {
     DataHandler *dh = new DataHandler();
+
 #ifdef MNIST
     dh->read_feature_vector("../../data/train-images-idx3-ubyte");
     dh->read_class_vector("../../data/train-labels-idx1-ubyte");
     dh->count_classes();
 #else
-    dh->read_csv("../../data/iris.csv", ",");
+    dh->read_csv("../../data/iris.data", ",");
 #endif
     dh->split_data();
     std::vector<int> hidden_layers = {10};
