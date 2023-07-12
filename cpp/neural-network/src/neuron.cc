@@ -18,6 +18,6 @@ void Neuron::initialize_weights(int previous_layer_size)
     std::normal_distribution<double> distribution(0.0, 1.0);
     for (int i = 0; i <= previous_layer_size + 1; i++)
     {
-        weights->push_back(generate_random_number(-1.0, 1.0));
+        weights.push_back(generate_random_number(-1.0, 1.0));
     }
 }

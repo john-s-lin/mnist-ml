@@ -3,23 +3,35 @@
 #include "data_handler.hpp"
 #include <numeric>
 
-Network::Network(std::vector<int> layer_sizes, int input_size, int output_size, double learning_rate)
+/**
+ * @brief Construct a new Network:: Network object
+ *
+ * @param spec
+ * @param input_size
+ * @param output_size Equivalent to the number of classes
+ * @param learning_rate
+ */
+Network::Network(std::vector<int> spec, int input_size, int output_size, double learning_rate)
 {
-    for (int i = 0; i < layer_sizes.size(); i++)
+    for (int i = 0; i < spec.size(); i++)
     {
         if (i == 0)
         {
-            layers.push_back(new Layer(input_size, layer_sizes.at(i)));
+            layers.push_back(new Layer(input_size, spec.at(i)));
         }
         else
         {
-            layers.push_back(new Layer(layers.at(i - 1)->neurons.size(), layer_sizes.at(i)));
+            layers.push_back(new Layer(layers.at(i - 1)->neurons.size(), spec.at(i)));
         }
     }
     layers.push_back(new Layer(layers.at(layers.size() - 1)->neurons.size(), output_size));
     this->learning_rate = learning_rate;
 }
 
+/**
+ * @brief Destroy the Network:: Network object
+ *
+ */
 Network::~Network()
 {
     for (Layer *layer : layers)
@@ -43,7 +55,7 @@ std::vector<double> Network::feed_forward(Data *data)
         std::vector<double> new_inputs;
         for (Neuron *n : layer->neurons)
         {
-            double activation = this->activation_function(inputs, *n->weights);
+            double activation = this->activation_function(inputs, n->weights);
             n->output = this->transfer(activation);
             new_inputs.push_back(n->output);
         }
@@ -54,7 +66,7 @@ std::vector<double> Network::feed_forward(Data *data)
 
 double Network::activation_function(std::vector<double> inputs, std::vector<double> weights)
 {
-    double activation = weights.back();
+    double activation = weights.back(); // Bias
     for (int i = 0; i < weights.size() - 1; i++)
     {
         activation += weights[i] * inputs[i];
@@ -102,7 +114,7 @@ void Network::back_propagate(Data *data)
                 double error = 0;
                 for (Neuron *n : layers.at(i + 1)->neurons)
                 {
-                    error += (n->weights->at(j) * n->delta);
+                    error += (n->weights.at(j) * n->delta);
                 }
                 errors.push_back(error);
             }
@@ -144,9 +156,9 @@ void Network::update_weights(Data *data)
         {
             for (int j = 0; j < inputs.size(); j++)
             {
-                n->weights->at(j) += this->learning_rate * n->delta * inputs.at(j);
+                n->weights.at(j) += this->learning_rate * n->delta * inputs.at(j);
             }
-            n->weights->back() += this->learning_rate * n->delta;
+            n->weights.back() += this->learning_rate * n->delta;
         }
         inputs.clear();
     }
@@ -178,8 +190,15 @@ void Network::train(int epochs)
         {
             std::vector<double> outputs = this->feed_forward(data);
             std::vector<int> expected = *data->get_class_vector();
-            sum_error += std::inner_product(outputs.begin(), outputs.end(), expected.begin(), 0.0, std::plus<>(), [](double a, double b)
-                                            { return pow(a - b, 2); });
+
+            double error = 0;
+
+            for (int j = 0; j < outputs.size(); j++)
+            {
+                error += pow((double)expected.at(j) - outputs.at(j), 2);
+            }
+            sum_error += error;
+
             this->back_propagate(data);
             this->update_weights(data);
         }
@@ -229,11 +248,11 @@ int main()
 {
     DataHandler *dh = new DataHandler();
 #ifdef MNIST
-    dh->read_feature_vector("data/train-images-idx3-ubyte");
-    dh->read_class_vector("data/train-labels-idx1-ubyte");
+    dh->read_feature_vector("../../data/train-images-idx3-ubyte");
+    dh->read_class_vector("../../data/train-labels-idx1-ubyte");
     dh->count_classes();
 #else
-    dh->read_csv("data/iris.csv", ",");
+    dh->read_csv("../../data/iris.csv", ",");
 #endif
     dh->split_data();
     std::vector<int> hidden_layers = {10};
