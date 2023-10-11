@@ -7,4 +7,10 @@ pub mod data {
         enum_label: i32,
         distance: f64,
     }
+
+    impl Data {
+        pub fn new() -> Self {
+            self.feature_vector = None;
+        }
+    }
 }
