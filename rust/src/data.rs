@@ -9,8 +9,7 @@ pub mod data {
     }
 
     impl Data {
-        pub fn new() -> Self {
-            self.feature_vector = None;
-        }
+        // NOTE: constructors and destructors are not implemented
+        // since they are initialized immediately and dropped when out of scope       
     }
 }
